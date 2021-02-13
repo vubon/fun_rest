@@ -1,7 +1,5 @@
 """User model"""
 from django.db import models
-from django.db.models import F, Value
-from django.db.models.functions import Concat
 from django.contrib.auth.hashers import make_password
 
 
