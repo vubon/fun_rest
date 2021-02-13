@@ -96,4 +96,4 @@ Method: GET
 }
 ```
 
-[N.B. does not have any programmantically data validation. So you need to send validate data set]
+[N.B. does not have any programmatically data validation. So you need to send validate data set]
