@@ -1,3 +1,7 @@
+"""User model register here"""
 from django.contrib import admin
 
-# Register your models here.
+from users.models import User, Tags
+
+admin.site.register(User)
+admin.site.register(Tags)
