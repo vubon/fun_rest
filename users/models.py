@@ -14,6 +14,18 @@ class UserManager(models.Manager):
             password=make_password(data.get("password"))
         )
 
+    def get_user_details(self, pk):
+        """
+        :param pk:
+        :return:
+        """
+        user = self.filter(id=pk)
+        if user.exists():
+            return {
+                "id": user[0].id,
+                "name": f"{user[0].first_name} {user[0].last_name}"
+            }
+
 
 class Tags(models.Model):
     """User tag atrribute"""
