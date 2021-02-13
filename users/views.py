@@ -22,6 +22,19 @@ class CreateUserAPI(APIView):
         user = User.objects.create_user(self.request.data)
         return Response(data={"id": user.pk}, status=status.HTTP_201_CREATED)
 
+    def get(self, request):
+        """
+        URL: URI/users?tags=<tag1>,<tag2>
+        :param request:
+        :return:
+        """
+        params = request.query_params.dict()
+        if params:
+            tags = params.get("tags").split(",")
+            users = User.objects.get_tags(tags=tags)
+            return Response(data={"users": users}, status=status.HTTP_200_OK)
+        return Response(data={}, status=status.HTTP_200_OK)
+
 
 class UserDetailsAPI(APIView):
     """Get user details"""
@@ -56,3 +69,19 @@ class CreateTagAPI(APIView):
         request.data["id"] = pk
         Tags.objects.create_tag(request.data)
         return Response(data={}, status=status.HTTP_201_CREATED)
+
+
+# class TagDetailsAPI(APIView):
+#     """Tag details"""
+#     permission_classes = ()
+#     authentication_classes = ()
+#
+#     def get(self, request):
+#         """
+#         URL: URI/users?tags=<tag1>,<tag2>
+#         :param request:
+#         :return:
+#         """
+#         print(request.query_params.dict())
+#         # user = User.objects.get_tags()
+#         return Response(data={}, status=status.HTTP_200_OK)

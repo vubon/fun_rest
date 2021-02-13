@@ -1,5 +1,7 @@
 """User model"""
 from django.db import models
+from django.db.models import F, Value
+from django.db.models.functions import Concat
 from django.contrib.auth.hashers import make_password
 
 
@@ -25,6 +27,25 @@ class UserManager(models.Manager):
                 "id": user[0].id,
                 "name": f"{user[0].first_name} {user[0].last_name}"
             }
+
+    def get_tags(self, tags):
+        """
+        :param tags:
+        :return:
+        """
+        # a = self.filter(tags__name__in=tags)
+        # print([user.pk for user in a])
+        users = self.filter(tags__name__in=tags).distinct()
+
+        users_info = []
+
+        for user in users:
+            data = dict()
+            data["id"] = user.pk
+            data["name"] = user.first_name + " " + user.last_name
+            data["tags"] = [tag.name for tag in user.tags.all()]
+            users_info.append(data)
+        return users_info
 
 
 class TagManager(models.Manager):
