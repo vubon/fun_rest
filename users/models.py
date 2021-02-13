@@ -33,12 +33,8 @@ class UserManager(models.Manager):
         :param tags:
         :return:
         """
-        # a = self.filter(tags__name__in=tags)
-        # print([user.pk for user in a])
         users = self.filter(tags__name__in=tags).distinct()
-
         users_info = []
-
         for user in users:
             data = dict()
             data["id"] = user.pk
