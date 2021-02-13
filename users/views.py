@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User
+from users.models import User, Tags
 
 
 class CreateUserAPI(APIView):
@@ -39,3 +39,20 @@ class UserDetailsAPI(APIView):
         if user:
             return Response(data=user, status=status.HTTP_200_OK)
         return Response(data={"status": "User Not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CreateTagAPI(APIView):
+    """Create Tag API"""
+    permission_classes = ()
+    authentication_classes = ()
+
+    def post(self, request, pk):
+        """
+        URL: URI/users/{user_id}/tags
+        :param request:
+        :param pk:
+        :return:
+        """
+        request.data["id"] = pk
+        Tags.objects.create_tag(request.data)
+        return Response(data={}, status=status.HTTP_201_CREATED)

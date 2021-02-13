@@ -27,10 +27,30 @@ class UserManager(models.Manager):
             }
 
 
+class TagManager(models.Manager):
+    """Tag manager"""
+
+    def create_tag(self, data):
+        """
+        :param data:
+        :return:
+        """
+        user = User.objects.filter(pk=data.get("id"))
+        if user.exists():
+            for tag in data.get("tags"):
+                new_tag = self.create(
+                    name=tag,
+                    expiry=data.get("expiry")
+                )
+                user[0].tags.add(new_tag)
+
+
 class Tags(models.Model):
     """User tag atrribute"""
     name = models.TextField(max_length=300)
     expiry = models.PositiveIntegerField()
+
+    objects = TagManager()
 
     def __str__(self):
         return f"{self.name}"
