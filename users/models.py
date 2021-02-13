@@ -14,7 +14,7 @@ class User(models.Model):
     first_name = models.TextField()
     last_name = models.TextField()
     password = models.TextField()
-    tags = models.ForeignKey(Tags, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tags)
 
     def __str__(self):
         return f"{self.first_name}"
